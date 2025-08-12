@@ -1,0 +1,3 @@
+const supabaseUrl = "https://xlpoxfbzscvmohdwmuar.supabase.co";
+const supabaseKey = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhscG94ZmJ6c2N2bW9oZHdtdWFyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTM0Njg1NDIsImV4cCI6MjA2OTA0NDU0Mn0.0gAS0Kdmsj3rynVnNJjl52m3B453hDZbieMzsJRmxDg`;
+export const client = supabase.createClient(supabaseUrl, supabaseKey);
