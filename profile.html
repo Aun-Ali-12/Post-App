@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Profile</title>
+  </head>
+  <body>
+    <header>
+        <h1>Profile</h1>
+        <p id="show"></p>
+        <button type="submit" id="logout">Signout</button>
+    </header><br>
+    <div id="post-container">
+      <label for="">Enter Title<input type="text" id="P-title" /></label><br />
+      <label for="">Enter Content<input type="text" id="P-content" /></label
+      ><br />
+      <div id="post-btn">
+        <button type="button">Post</button>
+      </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="./app.js" type="module"></script>
+  </body>
+</html>
