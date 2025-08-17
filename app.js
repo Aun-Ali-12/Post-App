@@ -60,13 +60,23 @@ async function createAcc() {
     password: cPass.value,
     options: {
       data: {
-        name: cName.value,
+        full_name: cName.value,
       },
     },
   });
   error ? alert(error.message) : alert("Account created successfully"),
     (suForm.style.display = "none");
   liForm.style.display = "block";
+
+  //when user signsup, create a row(user_id, full_name) in profile table to combine "post" and "profile" table:
+  //get user
+  const {
+    data: { user },
+  } = await client.auth.getUser();
+  await client
+    .from("profile")
+    .insert({ user_id: user.id, full_name: user.user_metadata.full_name });
+  console.log(user.user_metadata.full_name);
 }
 
 /******************* Login Functionality: ********************/
@@ -93,7 +103,7 @@ async function loginAcc() {
 /***************** Sign out functionality ********************/
 if (document.getElementById("logout")) {
   document.getElementById("logout").addEventListener("click", async () => {
-    const { error } = await client.auth.signOut()
+    const { error } = await client.auth.signOut();
     !error ? (window.location.href = "index.html") : alert(error.message);
   });
 }
@@ -108,7 +118,7 @@ async function authCheck() {
     ? alert("First Login")((window.location.href = "index.html"))
     : console.log(session);
   //user name on profile:
-  userName.innerHTML = `<p>${session.user.user_metadata.name}</p><p>${session.user.user_metadata.email}</p>`;
+  userName.innerHTML = `<p>${session.user.user_metadata.full_name}</p><p>${session.user.user_metadata.email}</p>`;
 }
 //checking auth func on specific pathname
 if (window.location.pathname == "/profile.html") {
@@ -201,7 +211,7 @@ if (showContent) {
 
 //Show all posts:
 let allPost = document.getElementById("show-all-post");
-async function fetch() { 
+async function fetch() {
   const { data: allpost, error } = await client.from("Post").select("*");
   if (error) {
     alert("Something is wrong");
@@ -227,19 +237,18 @@ homePBtn.addEventListener("click", () => {
   window.location.href = "/home.html";
 });
 
-
 //user specific profile name with post:
-async function postName(){
-  const { data: postName, error } = await client
-  .from('Post')
-  .select(`user_id,
-    caption,
-    image_url,
-    created_at,
-    profile(
-      full_name
-    )`
-  )
-    postName? console.log(postName): alert(error.message)
-}
-postName()
+// async function postName(){
+//   const { data: postName, error } = await client
+//   .from('Post')
+//   .select(`user_id,
+//     caption,
+//     image_url,
+//     created_at,
+//     profile(
+//       full_name
+//     )`
+//   )
+//     postName? console.log(postName): alert(error.message)
+// }
+// postName()
