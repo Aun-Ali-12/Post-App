@@ -3,23 +3,30 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css">
     <title>Profile</title>
   </head>
   <body>
     <header>
         <h1>Profile</h1>
-        <p id="show"></p>
+        <button id="home">Homepage</button>
+        <p id="show-user-detail"></p>
         <button type="submit" id="logout">Signout</button>
     </header><br>
+    <!-- post container  -->
     <div id="post-container">
-      <label for="">Enter Title<input type="text" id="P-title" /></label><br />
-      <label for="">Enter Content<input type="text" id="P-content" /></label
+      <label for="">Upload Image:<input type="file" id="image" accept="image/*" required/></label><br />
+      <label for="">Enter Content:<input type="text" id="caption" placeholder="enter your caption..." /></label
       ><br />
       <div id="post-btn">
-        <button type="button">Post</button>
+        <button type="button" id="post">Submit</button>
       </div>
     </div>
+
+    <!-- content div  -->
+     <div id="content-container"></div>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="./app.js" type="module"></script>
   </body>
 </html>
+

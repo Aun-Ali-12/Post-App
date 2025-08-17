@@ -6,15 +6,41 @@
     <title>Document</title>
   </head>
   <body>
-    <!-- header  -->
-    <div id="header">
-      <!-- navbar -->
-      <nav id="navbar">
-        <h1>Blog App</h1>
-        <div id="header-btn">
-          <button type="button" id="sign-in-nav">Login</button>
+    <!-- signup form  -->
+    <div id="signup-form">
+        <h1>Create your account</h1>
+      <form id="c-form">
+        <div id="c-input-field">
+          <label>Enter your name:<input type="text" id="c-name" /></label><br />
+          <label>Enter your email:<input type="email" id="c-email" /></label
+          ><br />
+          <label
+            >Enter your password:<input type="password" id="c-pass" /></label
+          ><br />
         </div>
-      </nav>
+        <div id="c-btn">
+          <button id="createAcc">sign up</button>
+          <p>already have an account?</p>
+          <a href="" id="signin">sign in</a>
+        </div>
+      </form>
+    </div>
+
+        <!-- login form  -->
+    <div id="login-form">
+        <h1>log into your account</h1>
+      <form id="l-form">
+        <div id="l-input-field">
+          <label>Enter your email:<input type="email" id="l-email" /></label
+          ><br />
+          <label
+            >Enter your password:<input type="password" id="l-pass" /></label
+          ><br />
+        </div>
+        <div id="l-btn">
+          <button id="loginAcc">Login</button><p>haven't an account yet?</p><a href="" id="signup">sign up</a>
+        </div>
+      </form>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="./app.js" type="module"></script>
