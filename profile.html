@@ -3,30 +3,49 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="profile.css" />
     <title>Profile</title>
   </head>
   <body>
     <header>
-        <h1>Profile</h1>
-        <button id="home">Homepage</button>
-        <p id="show-user-detail"></p>
-        <button type="submit" id="logout">Signout</button>
-    </header><br>
+      <!-- <h1>Profile</h1> -->
+      <!-- profile picture  -->
+      <div id="profile-container">
+        <img id="profile" width="150px" height="150px" />
+        <input type="file" id="profile-img" />
+        <button id="profile-pic">Upload</button>
+      </div>
+      <button id="home">Homepage</button>
+      <p id="show-user-detail"></p>
+      <p id="post-count"></p>
+      <button type="submit" id="logout">Signout</button>
+    </header>
+    <br />
     <!-- post container  -->
+    <button id="createPost">Create Post</button>
     <div id="post-container">
-      <label for="">Upload Image:<input type="file" id="image" accept="image/*" required/></label><br />
-      <label for="">Enter Content:<input type="text" id="caption" placeholder="enter your caption..." /></label
+      <label for=""
+        >Upload Image:<input
+          type="file"
+          id="image"
+          accept="image/*"
+          required /></label
+      ><br />
+      <label for=""
+        >Enter Content:<input
+          type="text"
+          id="caption"
+          placeholder="enter your caption..." /></label
       ><br />
       <div id="post-btn">
         <button type="button" id="post">Submit</button>
+        <button type="button" id="close">Close</button>
       </div>
     </div>
 
     <!-- content div  -->
-     <div id="content-container"></div>
+    <div id="content-container"></div>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="./app.js" type="module"></script>
   </body>
 </html>
-
