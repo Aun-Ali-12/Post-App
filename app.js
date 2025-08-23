@@ -2,8 +2,8 @@ import { client } from "./config.js";
 console.log(client);
 
 let logBtn = document.getElementById("sign-in-nav");
-let suForm = document.getElementById("signup-form");
-let liForm = document.getElementById("login-form");
+let suForm = document.getElementById("div-sec");
+let liForm = document.getElementById("empty-div");
 
 if (suForm) {
   suForm.style.display = "none";
@@ -23,6 +23,7 @@ if (suBtn) {
   suBtn.addEventListener("click", (e) => {
     e.preventDefault();
     suForm.style.display = "block";
+    suForm.classList.add('slides')
     liForm.style.display = "none";
   });
 }
@@ -34,6 +35,7 @@ if (siBtn) {
     e.preventDefault();
     suForm.style.display = "none";
     liForm.style.display = "block";
+    liForm.classList.add("slides")
   });
 }
 
@@ -121,7 +123,7 @@ async function authCheck() {
   userName.innerHTML = `<p>${session.user.user_metadata.full_name}</p><p>${session.user.user_metadata.email}</p>`;
 }
 //checking auth func on specific pathname
-if (window.location.pathname == "/profile.html") {
+if (window.location.pathname == "/profile.html" || window.location.pathname == '/home.html') {
   authCheck();
 }
 

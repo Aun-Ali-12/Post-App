@@ -3,47 +3,74 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="form.css"> 
+    <link rel="stylesheet" href="form.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css"
+    />
     <title>Document</title>
   </head>
   <body>
-    <!-- signup form  -->
-    <div id="signup-form">
-        <h1>Create your account</h1>
-      <form id="c-form">
-        <div id="c-input-field">
-          <label>Enter your name:<input type="text" id="c-name" /></label><br />
-          <label>Enter your email:<input type="email" id="c-email" /></label
-          ><br />
-          <label
-            >Enter your password:<input type="password" id="c-pass" /></label
-          ><br />
+    <div id="empty-div">
+      <!-- inner first div  -->
+      <div id="div-1-container">
+        <div id="div-1">
+          <h1>welcome to my blog app</h1>
+          <p>
+            Create posts, explore voices, and connect with people everywhere.
+          </p>
         </div>
-        <div id="c-btn">
-          <button id="createAcc">sign up</button>
-          <p>already have an account?</p>
-          <a href="" id="signin">sign in</a>
+        <!-- login form  -->
+        <div id="login-form">
+          <div id="icon">
+            <i class="fa-solid fa-blog icon"></i>
+          </div>
+          <h1>log into your account</h1>
+          <form id="l-form">
+            <div id="l-input-field">
+              <label>Enter your email:<input type="email" id="l-email" /></label
+              ><br />
+              <label
+                >Enter your password:<input
+                  type="password"
+                  id="l-pass" /></label
+              ><br />
+            </div>
+            <div id="l-btn">
+              <button id="loginAcc">Login</button>
+              <p>haven't an account yet?</p>
+              <a href="" id="signup">sign up</a>
+            </div>
+          </form>
         </div>
-      </form>
+      </div>
     </div>
 
-        <!-- login form  -->
-    <div id="login-form">
-        <h1>log into your account</h1>
-      <form id="l-form">
-        <div id="l-input-field">
-          <label>Enter your email:<input type="email" id="l-email" /></label
-          ><br />
-          <label
-            >Enter your password:<input type="password" id="l-pass" /></label
-          ><br />
-        </div>
-        <div id="l-btn">
-          <button id="loginAcc">Login</button><p>haven't an account yet?</p><a href="" id="signup">sign up</a>
-        </div>
-      </form>
+
+    <!-- signup form  -->
+    <div id="div-sec">
+      <!-- inner second div  -->
+      <div id="signup-form">
+        <i class="fa-solid fa-blog icon"></i>
+        <h1>Create your account</h1>
+        <form id="c-form">
+          <div id="c-input-field">
+            <label>Enter your name:<input type="text" id="c-name" /></label
+            ><br />
+            <label>Enter your email:<input type="email" id="c-email" /></label
+            ><br />
+            <label
+              >Enter your password:<input type="password" id="c-pass" /></label
+            ><br />
+          </div>
+          <div id="c-btn">
+            <button id="createAcc">sign up</button>
+            <p>already have an account?</p>
+            <a href="" id="signin">sign in</a>
+          </div>
+        </form>
+      </div>
     </div>
-    <p id="loader">Loading...</p>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="./app.js" type="module"></script>
   </body>
