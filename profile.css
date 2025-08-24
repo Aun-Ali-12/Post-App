@@ -69,7 +69,9 @@ header {
 
 /* Upload Button */
 #profile-img {
-  display: none;
+  display: block;
+  background-color: var(--accent-hover);
+  width: 10vw;
 }
 
 #profile-pic {

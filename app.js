@@ -341,7 +341,7 @@ async function uploadProfile() {
   const { data: insertprofile, error } = await client.storage
     .from("uploadfile")
     .upload(`${folderName}`, profileObj);
-  insertprofile ? alert("Ye!!") : alert(error.message);
+  insertprofile ? alert("Picture uploaded") : alert(error.message);
   console.log(insertprofile);
 
   //retreive url of profile picture:
