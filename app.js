@@ -2,8 +2,8 @@ import { client } from "./config.js";
 console.log(client);
 
 let logBtn = document.getElementById("sign-in-nav");
-let suForm = document.getElementById("div-sec");
-let liForm = document.getElementById("empty-div");
+let suForm = document.getElementById("signup-form");
+let liForm = document.getElementById("first-container");
 
 if (suForm) {
   suForm.style.display = "none";
@@ -23,8 +23,8 @@ if (suBtn) {
   suBtn.addEventListener("click", (e) => {
     e.preventDefault();
     suForm.style.display = "block";
-    suForm.classList.add('slides')
     liForm.style.display = "none";
+    suForm.classList.add("slides");
   });
 }
 
@@ -35,7 +35,7 @@ if (siBtn) {
     e.preventDefault();
     suForm.style.display = "none";
     liForm.style.display = "block";
-    liForm.classList.add("slides")
+    liForm.classList.add("slides");
   });
 }
 
@@ -74,11 +74,16 @@ async function createAcc() {
   //get user
   const {
     data: { user },
+    error: userError,
   } = await client.auth.getUser();
   await client
     .from("profile")
     .insert({ user_id: user.id, full_name: user.user_metadata.full_name });
-  console.log(user.user_metadata.full_name);
+  if (userError) {
+    alert(userError.message);
+  } else {
+    alert("user is added into profile table");
+  }
 }
 
 /******************* Login Functionality: ********************/
@@ -105,25 +110,30 @@ async function loginAcc() {
 /***************** Sign out functionality ********************/
 if (document.getElementById("logout")) {
   document.getElementById("logout").addEventListener("click", async () => {
-    const { error } = await client.auth.signOut();
-    !error ? (window.location.href = "index.html") : alert(error.message);
+    signOut();
   });
 }
-
+async function signOut() {
+  const { error } = await client.auth.signOut();
+  !error ? (window.location.href = "index.html") : alert(error.message);
+}
 //Auth check:
 async function authCheck() {
   const {
     data: { session },
-    error,
   } = await client.auth.getSession();
   !session
     ? alert("First Login")((window.location.href = "index.html"))
     : console.log(session);
-  //user name on profile:
-  userName.innerHTML = `<p>${session.user.user_metadata.full_name}</p><p>${session.user.user_metadata.email}</p>`;
+  // //user name on profile:
+  // userName.innerHTML = `<p>${session.user.user_metadata.full_name}</p><p>${session.user.user_metadata.email}</p>`;
 }
 //checking auth func on specific pathname
-if (window.location.pathname == "/profile.html" || window.location.pathname == '/home.html') {
+if (
+  window.location.pathname == "/profile.html" ||
+  window.location.pathname == "/home.html" ||
+  window.location.pathname == "/userProfile.html"
+) {
   authCheck();
 }
 
@@ -144,14 +154,15 @@ if (postContainer) {
 //Onclick create account button, post container will be shown:
 if (createPostBtn) {
   createPostBtn.addEventListener("click", () => {
-    postContainer.classList.add("show");
+    postContainer.classList.remove("hidden");
+    postContainer.classList.add("slides");
   });
 }
 
 //onclick close btn in post container
 if (postContainer) {
   closeBtn.addEventListener("click", () => {
-    postContainer.classList.remove("show");
+    postContainer.classList.add("hidden");
   });
 }
 
@@ -204,6 +215,7 @@ if (postBtn) {
       console.log(insertError.message);
     } else {
       userSpecificPost();
+      location.reload();
     }
   });
 }
@@ -225,10 +237,9 @@ async function userSpecificPost() {
   userpost.forEach((value) => {
     postCount.innerHTML = `Post ${userpost.length}`;
     showContent.innerHTML += `
-    <div>
-    <p>${user.user_metadata.full_name}</p>
+    <div class = "post-card">
   <img src = "${value.image_url}" width="100px" height="100px">
-    <p>${value.caption}</p>
+    <p class =  "post-body">${value.caption}</p>
   </div>
     `;
   });
@@ -257,27 +268,50 @@ if (allPost) {
 
 //user specific profile name with post:
 async function fetch() {
-  const { data: postName, error } = await client.from("Post").select(`user_id,
-    caption,
-    image_url,
-    created_at,
-    profile(
-      full_name, 
-      profile_img
-    )`);
-  let userId = postName.user_id;
-  allPost.innerHTML = "";
-  postName
-    ? postName.forEach((value) => {
-        console.log(value);
-        allPost.innerHTML += `
-        <img src = "${value.profile.profile_img}" width = "50px" height = "50px"/><p class="username" data-userid = "${value.user_id}">${value.profile.full_name}</p>
-       <img src = "${value.image_url}" width="100px" height="100px">
-       <p>${value.caption}</p>
-  
-  `;
-      })
-    : alert(error.message);
+  try {
+    // Replace 'Post_user_id_fkey' with your actual foreign key constraint name
+    const { data: postName, error } = await client.from("Post").select(`
+        user_id,
+        caption,
+        image_url,
+        created_at,
+        profile!Post_user_id_fkey(
+          full_name, 
+          profile_img
+        )
+      `);
+
+    if (error) {
+      console.log("Error:", error.message);
+      // Agar still error aa rahi hai toh exact constraint name check karein
+      console.log(
+        "Try checking your foreign key constraint name in Supabase dashboard"
+      );
+      return;
+    }
+
+    allPost.innerHTML = "";
+    postName?.forEach((value) => {
+      console.log(value);
+      allPost.innerHTML += `<li>
+        <div class="post-header">
+          <img src="${
+            value.profile?.profile_img || "./asset/default-profile.png"
+          }" width="50px" height="50px"/>
+          <p class="username" data-userid="${value.user_id}">${
+        value.profile?.full_name || "Unknown User"
+      }</p>
+        </div>
+        <img class="image-post" src="${
+          value.image_url
+        }" width="100px" height="100px">
+        <p class="post-content">${value.caption}</p>
+      </li>`;
+    });
+  } catch (error) {
+    console.log("Catch Error:", error);
+    alert("Error loading posts");
+  }
 }
 
 //user profile:
@@ -413,6 +447,42 @@ async function loadUserProfile(userId) {
   });
 }
 
+//Onclick profile button on home page
+let myFeed = document.getElementById("profileBtn");
+if(myFeed){
+myFeed.addEventListener("click", () => {
+  window.location.href = "./profile.html";
+});
+}
+//setting button:
+let settingBtn = document.getElementById("settingBtn");
+let innerSetting = document.getElementById("innerSetting");
+if (innerSetting) {
+  innerSetting.style.display = "none";
+}
+async function setting() {
+  innerSetting.style.display = "block";
+  const {
+    data: { user },
+    error: userError,
+  } = await client.auth.getUser();
+
+  innerSetting.innerHTML = `<div>
+  <p>${user.user_metadata.full_name}</p><p>${user.user_metadata.email}</p><button id="signout"><i class="fa-solid fa-arrow-right-from-bracket"></i>Signout</button>
+  </div>
+  `;
+}
+if (settingBtn) {
+  settingBtn.addEventListener("click", () => {
+    setting();
+  });
+}
+let signOutBtn = document.getElementById("signout");
+if (signOutBtn) {
+  signOutBtn.addEventListener("click", () => {
+   signOut()
+  });
+}
 // //loader
 // let loader = document.getElementById("loader");
 // loader.style.display = "none"

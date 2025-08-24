@@ -1,0 +1,238 @@
+@import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css");
+
+:root {
+  --bg-main: #f9fafb;
+  --bg-card: #ffffff;
+  --bg-gradient: linear-gradient(140deg, #6366f1, #9333ea);
+
+  --text-main: #111827;
+  --text-muted: #6b7280;
+  --text-invert: #ffffff;
+
+  --accent: #6366f1;
+  --accent-hover: #4f46e5;
+  --secondary: #9333ea;
+  --secondary-hover: #7e22ce;
+
+  --border: #e5e7eb;
+  --shadow: rgba(0, 0, 0, 0.1);
+
+  --font: "Poppins", sans-serif;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font);
+  background: var(--bg-main);
+  color: var(--text-main);
+}
+
+/* ===== HEADER ===== */
+body > button,
+#createPost {
+  display: none; /* hide default placement, we’ll restyle below */
+}
+
+header {
+  background: var(--bg-gradient);
+  color: var(--text-invert);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.8rem 1.2rem;
+  box-shadow: 0 2px 6px var(--shadow);
+}
+header>i{
+  font-size: 2rem;
+}
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.header-left button {
+  background: transparent;
+  border: none;
+  color: var(--text-invert);
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.header-left button:hover {
+  color: var(--bg-main);
+}
+
+#createPost {
+  display: block;
+  margin: 1rem;
+  /* background: var(--accent); */
+  color: var(--text-invert);
+  padding: 0.5rem;
+  font-weight: 400;
+  border-radius: 0.4rem;
+  cursor: pointer;
+}
+
+/* ===== POST FORM ===== */
+#post-container {
+  max-width: 500px;
+  margin: 2rem auto;
+  background: var(--bg-card);
+  padding: 1.2rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px var(--shadow);
+}
+
+#post-container label {
+  margin-bottom: 0.8rem;
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+#post-container input[type="text"],
+#post-container input[type="file"] {
+  width: 70%;
+  padding: 0.6rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  margin-top: 0.4rem;
+}
+
+#post-btn {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+#post-btn button {
+  padding: 0.6rem 1rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+#post-btn #post {
+  background: var(--accent);
+  color: var(--text-invert);
+}
+
+#post-btn #post:hover {
+  background: var(--accent-hover);
+}
+
+#post-btn #close {
+  background: var(--secondary);
+  color: var(--text-invert);
+}
+
+#post-btn #close:hover {
+  background: var(--secondary-hover);
+}
+
+/* ===== FEED ===== */
+#show-all {
+  max-width: 30vw;
+  margin: 2rem auto;
+}
+
+#show-all-post {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 1.5rem;
+}
+
+#show-all-post li {
+  background: var(--bg-card);
+  padding: 1rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px var(--shadow);
+  height: 50vh;
+  width: 30vw;
+}
+
+/* Post Header (username + pic) */
+.post-header {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  margin-bottom: 0.8rem;
+}
+
+.post-header img {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--accent);
+}
+
+.username {
+  font-weight: 600;
+  font-size: 1rem;
+}
+.username,
+.post-header img:hover {
+  cursor: pointer;
+}
+/* Post Content */
+.post-content {
+  font-size: 1rem;
+  color: var(--text-main);
+  line-height: 1.5;
+}
+.image-post {
+  width: 30vw;
+  height: 30vh;
+}
+
+#innerSetting > div {
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  background-color: var(--bg-card);
+  width: fit-content;
+  padding: 0.2rem 0.3rem;
+  color: var(--text-muted);
+  border-radius: 0.2rem;
+  position: relative;
+  left: 85vw;
+  bottom: 96rem;
+  border-top: 2px solid var(--accent-hover);
+}
+#signout {
+  color: rgb(207, 2, 2) !important;
+  background: transparent;
+  border: none;
+  color: var(--text-invert);
+  font-size: 1rem;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.show {
+  display: block;
+}
+.hidden {
+  display: none;
+}
+.slides {
+  animation: slideUp 0.8s ease-out forwards;
+  opacity: 0;
+}
+@keyframes slideUp {
+  from {
+    transform: translateY(100px); /* niche se start */
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0); /* apni jagah par ruk jaye */
+    opacity: 1;
+  }
+}

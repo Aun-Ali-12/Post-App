@@ -4,6 +4,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="profile.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css"
+    />
     <title>Profile</title>
   </head>
   <body>
@@ -15,14 +19,24 @@
         <input type="file" id="profile-img" />
         <button id="profile-pic">Upload</button>
       </div>
-      <button id="home">Homepage</button>
-      <p id="show-user-detail"></p>
-      <p id="post-count"></p>
-      <button type="submit" id="logout">Signout</button>
+      <div id="stats">
+        <p id="post-count"></p>
+        <p id="post-count">Followers</p>
+        <p id="post-count">Following</p>
+      </div>
+      <div id="top-menu">
+        <button id="home"><i class="fa-solid fa-house"></i></button>
+        <p id="show-user-detail"></p>
+        <button id="createPost">
+          <i class="fa-solid fa-plus"></i> Create Post
+        </button>
+        <button type="submit" id="logout">
+          <i class="fa-solid fa-arrow-right-from-bracket"></i> Signout
+        </button>
+      </div>
     </header>
     <br />
     <!-- post container  -->
-    <button id="createPost">Create Post</button>
     <div id="post-container">
       <label for=""
         >Upload Image:<input

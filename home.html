@@ -3,16 +3,55 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="feed.css">
+    <link rel="stylesheet" href="home.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css"
+    />
     <title>Document</title>
   </head>
   <body>
-    <button>Profile page</button>
-    <button>signout</button>
+    <header>
+      <i class="fa-solid fa-blog icon"></i>
+      <div class="header-left">
+        <!-- create post btn  -->
+        <button id="createPost">
+          <i class="fa-solid fa-plus"></i> Create Post
+        </button>
+        <button id="profileBtn" title="My Profile">
+          <i class="fa-solid fa-user"></i>
+        </button>
+        <button id="settingBtn" title="Settings">
+          <i class="fa-solid fa-gear"></i>
+        </button>
+      </div>
+    </header>
+    <!-- post container  -->
+    <div id="post-container">
+      <label for=""
+        >Upload Image:<input
+          type="file"
+          id="image"
+          accept="image/*"
+          required /></label
+      ><br />
+      <label for=""
+        >Enter Content:<input
+          type="text"
+          id="caption"
+          placeholder="enter your caption..." /></label
+      ><br />
+      <div id="post-btn">
+        <button type="button" id="post">Submit</button>
+        <button type="button" id="close">Close</button>
+      </div>
+    </div>
+
     <!-- all posts will be shown here  -->
-     <div id="show-all">
-        <ul id="show-all-post"></ul>
-     </div>
+    <div id="show-all">
+      <ul id="show-all-post"></ul>
+    </div>
+    <!-- <div id="innerSetting"></div> -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="./app.js" type="module"></script>
   </body>

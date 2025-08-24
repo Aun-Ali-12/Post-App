@@ -1,0 +1,278 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap");
+
+:root {
+  --bg-main: #f9fafb;
+  --bg-card: #ffffff;
+  --text-main: #111827;
+  --text-muted: #6b7280;
+  --text-invert: #ffffff;
+
+  --accent: #6366f1;
+  --accent-hover: #4f46e5;
+  --secondary: #9333ea;
+  --secondary-hover: #7e22ce;
+
+  --danger: #dc2626;
+  --danger-hover: #b91c1c;
+
+  --border: #e5e7eb;
+  --shadow: rgba(0, 0, 0, 0.1);
+
+  --font: "Poppins", sans-serif;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: var(--font);
+}
+
+body {
+  background: var(--bg-main);
+  color: var(--text-main);
+  line-height: 1.6;
+}
+
+/* ---------------- HEADER ---------------- */
+header {
+  background: var(--bg-card);
+  padding: 1.5rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  box-shadow: 0 4px 10px var(--shadow);
+  border-radius: 0 0 1rem 1rem;
+}
+#top-menu{
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+/* Profile Pic Area */
+#profile-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+#profile {
+  border-radius: 50%;
+  border: 3px solid var(--accent);
+  object-fit: cover;
+  box-shadow: 0 4px 8px var(--shadow);
+}
+
+/* Upload Button */
+#profile-img {
+  display: none;
+}
+
+#profile-pic {
+  background: var(--accent);
+  color: var(--text-invert);
+  border: none;
+  padding: 0.4rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.3s;
+}
+#profile-pic:hover {
+  background: var(--accent-hover);
+}
+
+/* Header Buttons */
+header button {
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  padding: 0.5rem 1.2rem;
+}
+
+#home {
+color: var(--accent-hover);
+background-color: transparent;
+font-size: 1.5rem;
+}
+#home:hover {
+cursor: pointer;
+}
+
+#logout {
+  background: var(--danger);
+  color: var(--text-invert);
+}
+#logout:hover {
+  background: var(--danger-hover);
+}
+
+/* User Detail */
+#show-user-detail {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+#post-count {
+  font-size: 1rem;
+  color: var(--text-muted);
+}
+
+/* ---------------- CREATE POST ---------------- */
+#createPost {
+  display: block;
+  margin: 1rem auto 1rem;
+  background: var(--accent);
+  color: var(--text-invert);
+  border: none;
+  padding: 0.5rem 1.4rem;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+#createPost:hover {
+  background: var(--accent-hover);
+}
+
+#post-container {
+  max-width: 500px;
+  margin: 1rem auto;
+  background: var(--bg-card);
+  padding: 1.5rem;
+  border-radius: 1rem;
+  box-shadow: 0 4px 12px var(--shadow);
+  /* display: none; */
+}
+
+#post-container label {
+  display: block;
+  font-weight: 600;
+  margin: 0.8rem 0 0.3rem;
+}
+
+#post-container input[type="text"],
+#post-container input[type="file"] {
+  width: 100%;
+  padding: 0.6rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  margin-top: 0.3rem;
+  font-size: 0.95rem;
+}
+
+#post-btn {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 1.2rem;
+}
+
+#post-btn button {
+  background: var(--accent);
+  color: var(--text-invert);
+  border: none;
+  padding: 0.5rem 1.2rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.3s;
+}
+#post-btn button:hover {
+  background: var(--accent-hover);
+}
+#close {
+  background: var(--danger);
+}
+#close:hover {
+  background: var(--danger-hover);
+}
+
+/* ---------------- POSTS GRID ---------------- */
+#content-container {
+  max-width: 1000px;
+  margin: 2rem auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+  padding: 0 1rem;
+}
+
+/* Post Card */
+.post-card {
+  background: var(--bg-card);
+  border-radius: 1rem;
+  box-shadow: 0 4px 12px var(--shadow);
+  overflow: hidden;
+  transition: transform 0.2s;
+}
+.post-card:hover {
+  transform: translateY(-5px);
+}
+
+/* Post Image */
+.post-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+/* Post Body */
+.post-body {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+/* Caption */
+.caption {
+  font-size: 0.95rem;
+  color: var(--text-main);
+}
+
+/* Post Actions */
+.post-actions {
+  display: flex;
+  gap: 1rem;
+  font-size: 1.2rem;
+  color: var(--text-muted);
+  cursor: pointer;
+}
+.post-actions i:hover {
+  color: var(--accent);
+}
+
+
+/* stats styling  */
+#stats{
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+.show {
+  display: block;
+}
+.hidden {
+  display: none;
+}
+.slides {
+  animation: slideUp 0.8s ease-out forwards;
+  opacity: 0;
+}
+@keyframes slideUp {
+  from {
+    transform: translateY(100px); /* niche se start */
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0); /* apni jagah par ruk jaye */
+    opacity: 1;
+  }
+}
