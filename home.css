@@ -168,11 +168,12 @@ header > i {
   display: flex;
   flex-direction: row;
   gap: 0.8rem;
+  align-items: center;
 }
 
 .post-header img {
-  width: 45px;
-  height: 45px;
+  width: 3rem;
+  height: 3rem;
   border-radius: 50%;
   object-fit: cover;
   border: 2px solid var(--accent);
@@ -266,4 +267,52 @@ header > i {
 .menu-btn > button:hover {
   background-color: var(--accent);
   color: var(--text-invert);
+}
+
+@media (max-width: 766px) {
+  /* ===== FEED ===== */
+  #show-all {
+    max-width: 55vw;
+    margin: 1rem auto;
+  }
+  #show-all-post li {
+    height: 50vh;
+    width: 50vw;
+  }
+  .post-header img {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+  header > i {
+    font-size: 2rem;
+  }
+  .header-left button {
+    font-size: 1rem;
+  }
+  .post-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.8rem;
+    justify-content: space-between;
+  }
+  .post-header div {
+    display: flex;
+    flex-direction: row;
+    gap: 0.8rem;
+    align-items: center;
+  }
+
+  .username {
+    font-weight: 600;
+    font-size: 0.8rem;
+  }
+  .username,
+  .post-header img:hover {
+    cursor: pointer;
+  }
+
+  .image-post {
+    width: 50vw;
+    height: 30vh;
+  }
 }

@@ -251,7 +251,7 @@ async function userSpecificPost() {
     .select("*")
     .eq("user_id", userId);
   userpost.forEach((value) => {
-    postCount.innerHTML = `${userpost.length}`;
+    postCount.innerHTML = `Posts ${userpost.length}`;
     showContent.innerHTML += `
     <div class = "post-card">
   <img src = "${value.image_url}" width="100px" height="100px">
@@ -314,7 +314,7 @@ async function fetch() {
       <i class="fa-solid fa-ellipsis"></i>
       <div class = "menu-btn">
       <button class="edit-btn">Edit</button>
-      <button class="del-btn" >Delete</button>
+      <button class="del-btn" data-id = "${value.user_id}" >Delete</button>
       </div>
       </div>
       </div>  
@@ -323,10 +323,11 @@ async function fetch() {
       }" width="100px" height="100px">
         <p class="post-content">${value.caption}</p>
       </li>`;
+      // console.log(value);
     });
   } catch (error) {
     console.log("Catch Error:", error);
-    alert("Error loading posts");
+    error()
   }
 }
 
@@ -339,8 +340,28 @@ if (allPost) {
       menu.querySelector(".del-btn").style.display = "block"; //delete btn will be shown
       menu.querySelector(".edit-btn").style.display = "block"; //edit btn will be shown only of that post's which is been clicked
     }
+
+    //delete func implementation:
+    if (e.target.closest(".del-btn")) {
+      let id = e.target.dataset.id;
+      // console.log(id); gets user id
+      del(id);
+    }
   });
+  fetch();
 }
+// del func:
+async function del(id) {
+  const response = await client.from("Post").delete().eq("user_id", id);
+  if (!response) {
+    error();
+    return;
+  }
+  // success("Post Deleted Successfully!");
+  alert("deleted");
+  location.reload();
+}
+
 //user profile:
 let profileInput = document.getElementById("profile-img");
 let profilePic = document.getElementById("profile-pic");
