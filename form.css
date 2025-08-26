@@ -46,24 +46,13 @@ body {
   background: var(--bg-main);
 }
 
-.slides {
-  animation: slideUp 0.8s ease-out forwards;
-  opacity: 0;
-}
-@keyframes slideUp {
-  from {
-    transform: translateY(100px); /* niche se start */
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0); /* apni jagah par ruk jaye */
-    opacity: 1;
-  }
-}
-
 /* Form Container */
+
 #signup-form,
 #login-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   background: var(--bg-card);
   /* width: 30vw; */
   padding: 39px 30px;
@@ -221,31 +210,95 @@ a:hover {
   #signup-form {
     width: 50vw !important;
   }
-    /* Heading */
-h1 {
-  font-size: 1.2rem;
-  font-weight: 600;
-  margin-bottom: 25px;
-  color: var(--text-main);
+  /* Heading */
+  h1 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 25px;
+    color: var(--text-main);
+    text-transform: capitalize;
+  }
+
+  /* Inputs */
+  label {
+    font-size: 0.7rem;
+    font-weight: 500;
+  }
+
+  input {
+    width: 100%;
+    margin-bottom: 5px;
+    font-size: 0.9rem;
+    padding: 0.5rem;
+    height: 2rem;
+  }
+  button {
+    padding: 0.5rem;
+    font-weight: 400;
+    font-size: 0.8rem;
+  }
+}
+.slides {
+  animation: slideUp 0.8s ease-out forwards;
+  opacity: 0;
+}
+@keyframes slideUp {
+  from {
+    transform: translateY(100px); /* niche se start */
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0); /* apni jagah par ruk jaye */
+    opacity: 1;
+  }
+}
+.error {
+  color: rgb(221, 3, 3);
   text-transform: capitalize;
-}
-
-/* Inputs */
-label {
-  font-size: 0.7rem;
-  font-weight: 500;
-}
-
-input {
-  width: 100%;
-  margin-bottom: 5px;
-  font-size: 0.9rem;
-  padding: 0.5rem;
-  height: 2rem;
-}
-button {
-  padding: 0.5rem;
-  font-weight: 400;
   font-size: 0.8rem;
+  animation: thunder 0.8s ease-in-out;
 }
+@keyframes thunder {
+  0% {
+    transform: translateX(0);
+  }
+  10% {
+    transform: translateX(-5px);
+  }
+  20% {
+    transform: translateX(5px);
+  }
+  30% {
+    transform: translateX(-3px);
+  }
+  40% {
+    transform: translateX(3px);
+  }
+  50% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+.success {
+  color: green;
+  text-transform: capitalize;
+  font-size: 0.8rem;
+  animation: fade 0.8s ease-in-out;
+}
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.hidden{
+  display: none;
+}
+.show{
+  display: block;
 }

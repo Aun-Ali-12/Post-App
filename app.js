@@ -56,6 +56,7 @@ if (cAcc) {
 }
 
 //Function to create an account:
+let sUpNotifier = document.getElementById("signup-notifier");
 async function createAcc() {
   const { data, error } = await client.auth.signUp({
     email: cEmail.value,
@@ -66,9 +67,19 @@ async function createAcc() {
       },
     },
   });
-  error ? alert(error.message) : alert("Account created successfully"),
-    (suForm.style.display = "none");
-  liForm.style.display = "block";
+  if (error) {
+    sUpNotifier.innerHTML = `
+  <p class = "error">${error.message}</p>
+  `;
+    return;
+  }
+  sUpNotifier.innerHTML = `
+<p class = "success">account created successfully</p>
+`;
+  setTimeout(() => {
+    suForm.style.display = "none";
+    liForm.style.display = "block";
+  }, 1500);
 
   //when user signsup, create a row(user_id, full_name) in profile table to combine "post" and "profile" table:
   //get user
@@ -79,11 +90,6 @@ async function createAcc() {
   await client
     .from("profile")
     .insert({ user_id: user.id, full_name: user.user_metadata.full_name });
-  if (userError) {
-    alert(userError.message);
-  } else {
-    alert("user is added into profile table");
-  }
 }
 
 /******************* Login Functionality: ********************/
@@ -97,14 +103,24 @@ if (document.getElementById("loginAcc")) {
 }
 //Function to perform login functionality:
 let userName = document.getElementById("show-user-detail");
+let loginNotifier = document.getElementById("login-notifier");
 async function loginAcc() {
   const { data, error } = await client.auth.signInWithPassword({
     email: liMail.value,
     password: liPass.value,
   });
-  !error
-    ? alert("Login successfull")((window.location.href = "profile.html"))
-    : alert(error.message);
+  if (error) {
+    loginNotifier.innerHTML = `
+  <p class = "error">${error.message}</p>
+  `;
+    return;
+  }
+  loginNotifier.innerHTML = `
+  <p class = "success">login successfull...</p>
+  `;
+  setTimeout(() => {
+    window.location.href = "profile.html";
+  }, 1500);
 }
 
 /***************** Sign out functionality ********************/
@@ -235,7 +251,7 @@ async function userSpecificPost() {
     .select("*")
     .eq("user_id", userId);
   userpost.forEach((value) => {
-    postCount.innerHTML = `Post ${userpost.length}`;
+    postCount.innerHTML = `${userpost.length}`;
     showContent.innerHTML += `
     <div class = "post-card">
   <img src = "${value.image_url}" width="100px" height="100px">
@@ -254,7 +270,7 @@ if (showContent) {
 let homePBtn = document.getElementById("home");
 if (homePBtn) {
   homePBtn.addEventListener("click", () => {
-    window.location.href = "/home.html";
+    window.location.href = "home.html";
   });
 }
 
@@ -281,30 +297,30 @@ async function fetch() {
         )
       `);
 
-    if (error) {
-      console.log("Error:", error.message);
-      // Agar still error aa rahi hai toh exact constraint name check karein
-      console.log(
-        "Try checking your foreign key constraint name in Supabase dashboard"
-      );
-      return;
-    }
-
     allPost.innerHTML = "";
     postName?.forEach((value) => {
-      console.log(value);
+      // console.log(value);
       allPost.innerHTML += `<li>
         <div class="post-header">
-          <img src="${
-            value.profile?.profile_img || "./asset/default-profile.png"
-          }" width="50px" height="50px"/>
+        <div>  
+        <img src="${
+          value.profile?.profile_img || "./asset/default-profile.png"
+        }" width="50px" height="50px"/>
           <p class="username" data-userid="${value.user_id}">${
         value.profile?.full_name || "Unknown User"
       }</p>
-        </div>
-        <img class="image-post" src="${
-          value.image_url
-        }" width="100px" height="100px">
+      </div>
+      <div class = "edit"> 
+      <i class="fa-solid fa-ellipsis"></i>
+      <div class = "menu-btn">
+      <button class="edit-btn">Edit</button>
+      <button class="del-btn" >Delete</button>
+      </div>
+      </div>
+      </div>  
+      <img class="image-post" src="${
+        value.image_url
+      }" width="100px" height="100px">
         <p class="post-content">${value.caption}</p>
       </li>`;
     });
@@ -314,59 +330,73 @@ async function fetch() {
   }
 }
 
+//edit/del post:
+if (allPost) {
+  allPost.addEventListener("click", (e) => {
+    if (e.target.closest(".edit")) {
+      let post = e.target.closest("li"); //finds that whole content of nearest li tag on which event is triggered
+      let menu = post.querySelector(".menu-btn"); //got li, now only nearest menu will be get
+      menu.querySelector(".del-btn").style.display = "block"; //delete btn will be shown
+      menu.querySelector(".edit-btn").style.display = "block"; //edit btn will be shown only of that post's which is been clicked
+    }
+  });
+}
 //user profile:
 let profileInput = document.getElementById("profile-img");
 let profilePic = document.getElementById("profile-pic");
 let shownPic = document.getElementById("profile");
 if (profilePic) {
   profilePic.addEventListener("click", () => {
-    uploadProfile();
+    profileInput.click();
   });
   window.addEventListener("DOMContentLoaded", () => {
     renderProfile();
   });
 }
+if (profileInput) {
+  profileInput.addEventListener("change", async () => {
+    //get user:
+    const {
+      data: { user },
+    } = await client.auth.getUser();
+    let userId = user.id;
+    let profileObj = profileInput.files[0];
+    let folderName = `profile/${userId}-${Date.now()}`;
+    console.log(userId);
 
-async function uploadProfile() {
-  //get user:
-  const {
-    data: { user },
-  } = await client.auth.getUser();
-  let userId = user.id;
-  let profileObj = profileInput.files[0];
-  let folderName = `profile/${userId}-${Date.now()}`;
-  console.log(userId);
+    //insert profile into buccket
+    const { data: insertprofile, error } = await client.storage
+      .from("uploadfile")
+      .upload(`${folderName}`, profileObj);
+    // insertprofile ? console.log("Picture uploaded in buccket") : console.log(error.message);
+    // console.log(insertprofile);
 
-  //insert profile into buccket
-  const { data: insertprofile, error } = await client.storage
-    .from("uploadfile")
-    .upload(`${folderName}`, profileObj);
-  insertprofile ? alert("Picture uploaded") : alert(error.message);
-  console.log(insertprofile);
+    //retreive url of profile picture:
+    const { data: pic_url } = client.storage
+      .from("uploadfile")
+      .getPublicUrl(`${folderName}`);
+    pic_url ? console.log(pic_url) : console.error(error.message);
 
-  //retreive url of profile picture:
-  const { data: pic_url } = client.storage
-    .from("uploadfile")
-    .getPublicUrl(`${folderName}`);
-  pic_url ? console.log(pic_url) : console.error(error.message);
+    let profileUrl = pic_url.publicUrl;
+    // console.log(profileUrl);
 
-  let profileUrl = pic_url.publicUrl;
-  // console.log(profileUrl);
-
-  //saving this profile url into profile table:
-  const { error: insertError } = await client
-    .from("profile")
-    .update({
-      user_id: userId,
-      profile_img: profileUrl,
-    })
-    .eq("user_id", userId) //because supa base requires where clause
-    .select();
-  !insertError
-    ? console.log("profile added")
-    : console.log(insertError.message);
+    //saving this profile url into profile table:
+    const { error: insertError } = await client
+      .from("profile")
+      .update({
+        user_id: userId,
+        profile_img: profileUrl,
+      })
+      .eq("user_id", userId) //because supa base requires where clause
+      .select();
+    if (error) {
+      error();
+      return;
+    } else {
+      success("Profile uploaded");
+    }
+  });
 }
-
 let deafultProfile = "./asset/default-profile.png";
 async function renderProfile() {
   const {
@@ -380,7 +410,7 @@ async function renderProfile() {
     .eq("user_id", userId)
     .single();
   if (profileError) {
-    alert(profileError.message);
+    error();
   } else if (profileData && profileData.profile_img) {
     shownPic.src = profileData.profile_img;
   } else {
@@ -449,10 +479,10 @@ async function loadUserProfile(userId) {
 
 //Onclick profile button on home page
 let myFeed = document.getElementById("profileBtn");
-if(myFeed){
-myFeed.addEventListener("click", () => {
-  window.location.href = "./profile.html";
-});
+if (myFeed) {
+  myFeed.addEventListener("click", () => {
+    window.location.href = "profile.html";
+  });
 }
 //setting button:
 let settingBtn = document.getElementById("settingBtn");
@@ -480,7 +510,7 @@ if (settingBtn) {
 let signOutBtn = document.getElementById("signout");
 if (signOutBtn) {
   signOutBtn.addEventListener("click", () => {
-   signOut()
+    signOut();
   });
 }
 // //loader
@@ -499,3 +529,25 @@ if (signOutBtn) {
 // // function hideLoader() {
 // //   loader.classList.add("hidden");
 // // }
+
+function success(message = "Operation Successful!") {
+  toastr.options = {
+    closeButton: true,
+    progressBar: true,
+    positionClass: "toast-top-right",
+    timeOut: 3000,
+    extendedTimeOut: 1000,
+  };
+  toastr.success(message, "Success");
+}
+
+function error(message = "Error occured!") {
+  toastr.options = {
+    closeButton: true,
+    progressBar: true,
+    positionClass: "toast-top-right",
+    timeOut: 3000,
+    extendedTimeOut: 1000,
+  };
+  toastr.error(error, "Success");
+}

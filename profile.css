@@ -62,16 +62,14 @@ header {
 
 #profile {
   border-radius: 50%;
-  border: 3px solid var(--accent);
+  border: 3px solid var(--border);
   object-fit: cover;
   box-shadow: 0 4px 8px var(--shadow);
 }
 
 /* Upload Button */
 #profile-img {
-  display: block;
-  background-color: var(--accent-hover);
-  width: 10vw;
+  display: none;
 }
 
 #profile-pic {
